@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert-rules.yml"
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Add AKS targets once kube-state-metrics / node-exporter are deployed, e.g.:
+  # - job_name: "kube-state-metrics"
+  #   static_configs:
+  #     - targets: ["kube-state-metrics.monitoring.svc:8080"]
