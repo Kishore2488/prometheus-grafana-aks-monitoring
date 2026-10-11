@@ -1,0 +1,23 @@
+name: Validate monitoring config
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  promtool:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Prometheus alert rules
+        run: |
+          docker run --rm -v "$PWD/prometheus:/prometheus" prom/prometheus:v2.53.0 \
+            promtool check rules /prometheus/alert-rules.yml
+
+      - name: Check Prometheus config
+        run: |
+          docker run --rm -v "$PWD/prometheus:/prometheus" prom/prometheus:v2.53.0 \
+            promtool check config /prometheus/prometheus.yml
