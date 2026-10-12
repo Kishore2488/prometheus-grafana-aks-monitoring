@@ -14,10 +14,10 @@ jobs:
 
       - name: Check Prometheus alert rules
         run: |
-          docker run --rm -v "$PWD/prometheus:/prometheus" prom/prometheus:v2.53.0 \
-            promtool check rules /prometheus/alert-rules.yml
+          docker run --rm --entrypoint=promtool -v "$PWD/prometheus:/prometheus" prom/prometheus:v2.53.0 \
+            check rules /prometheus/alert-rules.yml
 
       - name: Check Prometheus config
         run: |
-          docker run --rm -v "$PWD/prometheus:/prometheus" prom/prometheus:v2.53.0 \
-            promtool check config /prometheus/prometheus.yml
+          docker run --rm --entrypoint=promtool -v "$PWD/prometheus:/prometheus" prom/prometheus:v2.53.0 \
+            check config /prometheus/prometheus.yml
